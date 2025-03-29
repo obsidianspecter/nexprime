@@ -5,18 +5,18 @@ import ServiceSection from "../components/ServiceSection";
 import ContactForm from "../components/ContactForm";
 import ProjectSection from "../components/ProjectSection";
 import TestimonialSection from "../components/TestimonialSection";
-import Footer from "../components/Footer";
+import StatisticsSection from "../components/StatisticsSection";
 
 function Home() {
   return (
     <div className="w-screen min-h-screen m-0 p-0 font-inter">
       <HeroSection />
       <AboutSection />
+      <StatisticsSection />
       <ServiceSection />
       <ProjectSection />
-      {/* <TestimonialSection /> */}
+      <TestimonialSection />
       <ContactForm />
-      <Footer />
     </div>
   );
 }

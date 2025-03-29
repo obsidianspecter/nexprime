@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Home from './pages/Home';
 import MeetOurFamily from './pages/MeetOurFamily';
 import TeamMemberProfile from './pages/TeamMemberProfile';
@@ -13,9 +13,21 @@ import './styles.css'
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
+// ScrollToTop component to ensure the page scrolls to top on navigation
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
+
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Navbar />
       <Routes>
         <Route index path="/" element={<Home />} />
