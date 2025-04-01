@@ -1,7 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FaArrowRight, FaRobot, FaBrain, FaChartLine, FaCode } from "react-icons/fa";
-import Footer from "../../components/Footer";
 
 const GenerativeAI = () => {
   return (
@@ -214,8 +213,6 @@ const GenerativeAI = () => {
           </motion.div>
         </div>
       </div>
-      
-      <Footer />
     </div>
   );
 };

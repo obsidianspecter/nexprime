@@ -1,7 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FaArrowRight, FaLaptopCode, FaMobileAlt, FaShoppingCart, FaServer, FaSearch, FaBolt } from "react-icons/fa";
-import Footer from "../../components/Footer";
 
 const WebDevelopment = () => {
   return (
@@ -330,8 +329,6 @@ const WebDevelopment = () => {
           </motion.div>
         </div>
       </div>
-      
-      <Footer />
     </div>
   );
 };
