@@ -1,9 +1,8 @@
+
 .starfield {
     position: absolute;
     width: 100vw;
     height: 100vh;
-    overflow: hidden;
-    z-index: 10;
 }
 
 .star {
@@ -13,77 +12,29 @@
     width: 2px; /* Size of the stars */
     height: 2px; /* Size of the stars */
     animation: blink 1s infinite; /* Animation for blinking */
-    filter: blur(0.5px);
 }
 
 /* Keyframes for blinking effect */
 @keyframes blink {
     0%, 20%, 100% {
-        opacity: 0.2;
+        opacity: 0; /* Invisible at the start and end */
     }
     10%, 30% {
-        opacity: 1;
+        opacity: 1; /* Fully visible in the middle */
     }
 }
 
-/* Shooting star styles */
-.shooting-star {
-    position: absolute;
-    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%);
-    border-radius: 100px;
-    filter: blur(1px);
-    animation: shoot linear forwards;
-    z-index: 11;
-}
+/* Randomly position stars */
+.star:nth-child(1) { top: 10%; left: 20%; animation-duration: 1.5s; }
+.star:nth-child(2) { top: 30%; left: 50%; animation-duration: 2s; }
+.star:nth-child(3) { top: 70%; left: 80%; animation-duration: 1.2s; }
+.star:nth-child(4) { top: 40%; left: 10%; animation-duration: 1.8s; }
+.star:nth-child(5) { top: 60%; left: 90%; animation-duration: 2.5s; }
+/* Add more stars with different positions and durations */
+.star:nth-child(6) { top: 20%; left: 70%; animation-duration: 1.3s; }
+.star:nth-child(7) { top: 80%; left: 30%; animation-duration: 1.7s; }
+.star:nth-child(8) { top: 50%; left: 60%; animation-duration: 2.2s; }
+.star:nth-child(9) { top: 90%; left: 40%; animation-duration: 1.4s; }
+.star:nth-child(10) { top: 15%; left: 85%; animation-duration: 1.6s; }
 
-@keyframes shoot {
-    0% {
-        transform: translateX(0) translateY(0);
-        opacity: 1;
-    }
-    70% {
-        opacity: 1;
-    }
-    100% {
-        transform: translateX(250px) translateY(250px);
-        opacity: 0;
-    }
-}
-
-/* Star cluster styles */
-.star-cluster {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
-    border-radius: 50%;
-    animation: pulse 4s infinite alternate ease-in-out;
-    z-index: 9;
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-        opacity: 0.1;
-    }
-    50% {
-        transform: scale(1.5);
-        opacity: 0.2;
-    }
-    100% {
-        transform: scale(1);
-        opacity: 0.1;
-    }
-}
-
-/* Fallback animation durations for the first few stars */
-.star:nth-child(1) { animation-duration: 1.5s; }
-.star:nth-child(2) { animation-duration: 2s; }
-.star:nth-child(3) { animation-duration: 1.2s; }
-.star:nth-child(4) { animation-duration: 1.8s; }
-.star:nth-child(5) { animation-duration: 2.5s; }
-.star:nth-child(6) { animation-duration: 1.3s; }
-.star:nth-child(7) { animation-duration: 1.7s; }
-.star:nth-child(8) { animation-duration: 2.2s; }
-.star:nth-child(9) { animation-duration: 1.4s; }
-.star:nth-child(10) { animation-duration: 1.6s; }
+/* Continue adding more stars as needed */
