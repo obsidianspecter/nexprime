@@ -8,7 +8,7 @@ import TestimonialSection from "../components/TestimonialSection";
 
 function Home() {
   return (
-    <div className="w-screen min-h-screen m-0 p-0 font-inter">
+    <div className="w-full min-h-screen bg-[#00031D] overflow-x-hidden">
       <HeroSection />
       <AboutSection />
       <ServiceSection />
