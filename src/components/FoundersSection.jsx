@@ -2,35 +2,11 @@ import React from 'react';
 import anvin from '../assets/anwin.jpg';
 import arun from '../assets/arun.png';
 import harisudhan from '../assets/sudhan.png';
+import { teamMembers } from '../data/team';
 
 function FoundersSection() {
-    const founders = [
-        {
-            name: 'Mr. G. NARENDRAN',
-            title: 'Founder & CEO',
-            image: 'https://srec.ac.in/uploads/resource/src/ikFSitG9nV210720221015422250-narendran-g.jpg',
-            description: 'Founded the company and spearheaded its vision for growth and innovation.',
-        },
-        {
-            name: 'Harisudhan M',
-            title: 'CTO',
-            image: harisudhan,
-            description: 'CTO of the company, responsible for Technical and scaling operations.',
-        },
-        {
-            name: 'Anvin P Shibu',
-            title: 'Chief Operations Officer',
-            image: anvin,
-            description: 'Chief Operations Officer overseeing day-to-day business operations.',
-        },
-        {
-            name: 'Arunmozhi Varman K',
-            title: 'Technical Lead',
-            image: arun,
-            description: 'Technical head of operations, leading core product development and engineering.',
-        }
-    ];
-
+    const { founders, coFounders } = teamMembers;
+    const allFounders = [...founders, ...coFounders];
 
     return (
         <div id="founders" className="w-screen min-h-screen bg-[#0E0B1E] text-white py-16 px-8">
@@ -44,7 +20,7 @@ function FoundersSection() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                {founders.map((founder, index) => (
+                {allFounders.map((founder, index) => (
                     <div key={index} className="relative group bg-gray-400 shadow-inner rounded-xl bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10">
                         <img
                             src={founder.image}

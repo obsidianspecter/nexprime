@@ -103,14 +103,14 @@ function Navbar() {
                                 {item.toUpperCase()}
                             </Link>
                         ) : (
-                            <Link
+                            <a
                                 key={index}
-                                to={getLink(item)}
+                                href={getLink(item)}
                                 onClick={() => handleNavClick(item)}
                                 className="hover:scale-105 border-b-2 pb-3 pt-3 p-2 text-2xl hover:text-3xl border-gray-600 hover:border-white hover:bg-blue-500/20 font-raleway transition-all ease-in-out"
                             >
                                 {item.toUpperCase()}
-                            </Link>
+                            </a>
                         )
                     ))}
                 </nav>

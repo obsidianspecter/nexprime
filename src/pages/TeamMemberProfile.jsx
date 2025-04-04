@@ -1,174 +1,39 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { FaLinkedinIn, FaGithub, FaTwitter, FaArrowLeft } from 'react-icons/fa';
-import Footer from "../components/Footer";
 import { motion } from "framer-motion";
+import { getTeamMemberById } from '../data/team';
+import { getProfileData } from '../data/profiles';
 import anvin from '../assets/anwin.jpg';
-import arun from '../assets/arun.png';
-import harisudhan from '../assets/sudhan.png';
 
 function TeamMemberProfile() {
   const { id } = useParams();
-  const location = useLocation();
   const navigate = useNavigate();
   const [person, setPerson] = useState(null);
+  const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   
-  // All people data (in a real app, this would be fetched from an API)
-  const allPeople = {
-    founders: [
-      {
-        id: "narendran",
-        name: 'Mr. G. NARENDRAN',
-        title: 'Founder & CEO',
-        image: 'https://srec.ac.in/uploads/resource/src/ikFSitG9nV210720221015422250-narendran-g.jpg',
-        description: 'Founded the company and spearheaded its vision for growth and innovation.',
-        portfolio: {
-          linkedin: 'https://linkedin.com',
-          github: 'https://github.com',
-          twitter: 'https://twitter.com'
-        }
-      }
-    ],
-    coFounders: [
-      {
-        id: "harisudhan",
-        name: 'Harisudhan M',
-        title: 'CTO',
-        image: harisudhan,
-        description: 'CTO of the company, responsible for Technical and scaling operations.',
-        portfolio: {
-          linkedin: 'https://linkedin.com',
-          github: 'https://github.com',
-          twitter: 'https://twitter.com'
-        }
-      },
-      {
-        id: "anvin",
-        name: 'Anvin P Shibu',
-        title: 'Chief Operations Officer',
-        image: anvin,
-        description: 'Chief Operations Officer overseeing day-to-day business operations.',
-        portfolio: {
-          linkedin: 'https://linkedin.com',
-          github: 'https://github.com',
-          twitter: 'https://twitter.com'
-        }
-      },
-      {
-        id: "rathi",
-        name: 'Mrs Rathi',
-        title: 'Chief Marketing Officer',
-        image: 'https://images.unsplash.com/photo-1573496359142-b8d88e9218df?q=80&w=988&auto=format&fit=crop&ixlib=rb-4.0.3',
-        description: 'Leads marketing strategies and brand development initiatives.',
-        portfolio: {
-          linkedin: 'https://linkedin.com',
-          github: 'https://github.com',
-          twitter: 'https://twitter.com'
-        }
-      },
-      {
-        id: "anuradha",
-        name: 'Dr R Anuradha',
-        title: 'Chief Research Officer',
-        image: 'https://images.unsplash.com/photo-1580894732444-8ecded7900cd?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.0.3',
-        description: 'Heads research and development, driving technological innovation.',
-        portfolio: {
-          linkedin: 'https://linkedin.com',
-          github: 'https://github.com',
-          twitter: 'https://twitter.com'
-        }
-      },
-      {
-        id: "brighty",
-        name: 'Mrs Prince Sahaya Brighty',
-        title: 'Chief Product Officer',
-        image: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.0.3',
-        description: 'Oversees product development and user experience design.',
-        portfolio: {
-          linkedin: 'https://linkedin.com',
-          github: 'https://github.com',
-          twitter: 'https://twitter.com'
-        }
-      },
-      {
-        id: "alagusundari",
-        name: 'Mrs Alagusundari',
-        title: 'Chief Financial Officer',
-        image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3',
-        description: 'Manages financial operations and strategic business planning.',
-        portfolio: {
-          linkedin: 'https://linkedin.com',
-          github: 'https://github.com',
-          twitter: 'https://twitter.com'
-        }
-      }
-    ],
-    teamMembers: [
-      {
-        id: "arunmozhi",
-        name: 'Arunmozhi Varman K',
-        title: 'Technical Lead',
-        image: arun,
-        description: 'Technical head of operations, leading core product development and engineering.',
-        portfolio: {
-          linkedin: 'https://linkedin.com',
-          github: 'https://github.com',
-          twitter: 'https://twitter.com'
-        }
-      },
-      {
-        id: "harisudhan",
-        name: 'Harisudhan M',
-        title: 'Senior Developer',
-        image: harisudhan,
-        description: 'Full-stack developer specializing in scalable architecture and performance optimization.',
-        portfolio: {
-          linkedin: 'https://linkedin.com',
-          github: 'https://github.com',
-          twitter: 'https://twitter.com'
-        }
-      },
-      {
-        id: "anvin",
-        name: 'Anvin P Shibu',
-        title: 'Project Manager',
-        image: anvin,
-        description: 'Oversees project execution and ensures client satisfaction through efficient delivery.',
-        portfolio: {
-          linkedin: 'https://linkedin.com',
-          github: 'https://github.com',
-          twitter: 'https://twitter.com'
-        }
-      }
-    ]
-  };
-  
   useEffect(() => {
-    // Get the right array based on category
-    let category = location.state?.category || "team";
-    let dataArray;
+    // Get team member data
+    const teamMember = getTeamMemberById(id);
+    setPerson(teamMember);
     
-    switch(category) {
-      case "founder":
-        dataArray = allPeople.founders;
-        break;
-      case "cofounder":
-        dataArray = allPeople.coFounders;
-        break;
-      default:
-        dataArray = allPeople.teamMembers;
-    }
+    // Get profile data
+    const profileData = getProfileData(id);
+    setProfile(profileData);
     
-    // Find the person with matching id
-    const foundPerson = dataArray.find(p => p.id === id);
-    setPerson(foundPerson);
-    
-    // Adding a slight delay for the loading animation
-    setTimeout(() => {
+    // Set loading to false after a delay to allow for animations
+    const timer = setTimeout(() => {
       setLoading(false);
     }, id === "anvin" ? 2000 : 1000); // Longer animation for Anvin
-  }, [id, location.state]);
+    
+    return () => clearTimeout(timer);
+  }, [id]);
+  
+  // Helper function to determine if a person is a developer
+  const isDeveloper = (id) => {
+    return id === "anvin" || id === "harisudhan" || id === "arunmozhi";
+  };
   
   // Enhanced 'N' loading component
   const NexorisLoader = () => (
@@ -395,34 +260,38 @@ function TeamMemberProfile() {
     return id === "anvin" ? <AnvinLoader /> : <NexorisLoader />;
   }
   
-  if (!person) {
+  if (!person || !profile) {
     return (
-      <div className="w-screen h-screen flex flex-col justify-center items-center bg-[#0E0B1E] text-white">
-        <h1 className="text-3xl font-bold mb-4">Person not found</h1>
-        <button 
-          onClick={() => navigate('/meet-our-family')}
-          className="px-4 py-2 bg-blue-600 rounded-md hover:bg-blue-700"
-        >
-          Go back to team page
-        </button>
+      <div className="w-screen min-h-screen m-0 p-0 font-inter bg-[#0E0B1E] text-white flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Person not found</h1>
+          <button 
+            onClick={() => navigate('/meet-our-family')}
+            className="px-4 py-2 bg-blue-600 rounded-md hover:bg-blue-700 transition-colors"
+          >
+            Back to Team
+          </button>
+        </div>
       </div>
     );
   }
   
   return (
-    <div className="w-screen min-h-screen m-0 p-0 font-inter bg-[#0E0B1E] text-white">
+    <div className="w-screen min-h-screen m-0 p-0 font-inter bg-[#0E0B1E] text-white flex flex-col">
       <button 
         onClick={() => navigate('/meet-our-family')} 
-        className={`fixed top-6 left-6 z-50 flex items-center gap-2 ${
+        className={`fixed top-8 left-8 z-50 flex items-center gap-2 ${
           id === "anvin" 
             ? "bg-red-600/20 hover:bg-red-600/40" 
-            : "bg-blue-600/20 hover:bg-blue-600/40"
-        } px-4 py-2 rounded-md transition-all duration-300`}
+            : isDeveloper(id)
+              ? "bg-blue-600/20 hover:bg-blue-600/40"
+              : "bg-emerald-600/20 hover:bg-emerald-600/40"
+        } px-4 py-2 rounded-md transition-all duration-300 backdrop-blur-sm`}
       >
-        <FaArrowLeft /> Back
+        <FaArrowLeft className="text-lg" /> Back
       </button>
       
-      <div className="container mx-auto pt-24 px-8">
+      <div className="container mx-auto pt-24 px-8 flex-grow">
         {/* Hero section with animated elements */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 mb-16">
           {/* Image with animations */}
@@ -434,22 +303,10 @@ function TeamMemberProfile() {
           >
             <motion.div 
               animate={{ 
-                boxShadow: id === "anvin"
-                  ? [
-                    "0 0 20px 5px rgba(229, 0, 0, 0.3)",
-                    "0 0 30px 10px rgba(229, 0, 0, 0.5)",
-                    "0 0 20px 5px rgba(229, 0, 0, 0.3)"
-                  ]
-                  : [
-                    "0 0 20px 5px rgba(59, 130, 246, 0.3)",
-                    "0 0 30px 10px rgba(59, 130, 246, 0.5)",
-                    "0 0 20px 5px rgba(59, 130, 246, 0.3)"
-                  ]
+                boxShadow: profile.theme.glowColors.map(color => `0 0 30px 10px ${color}`)
               }}
               transition={{ duration: 3, repeat: Infinity }}
-              className={`w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 ${
-                id === "anvin" ? "border-red-500" : "border-blue-500"
-              }`}
+              className={`w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 ${profile.theme.borderColor}`}
             >
               {id === "anvin" ? (
                 <div className="relative w-full h-full">
@@ -458,7 +315,6 @@ function TeamMemberProfile() {
                     alt={person.name} 
                     className="w-full h-full object-cover"
                   />
-                  {/* N7 Overlay for Anvin */}
                   <div className="absolute bottom-2 right-2 bg-black/70 px-2 py-1 rounded font-mono text-red-500 text-xs tracking-widest border border-red-500">N7</div>
                 </div>
               ) : (
@@ -479,7 +335,11 @@ function TeamMemberProfile() {
               }}
               transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
               className={`absolute top-0 right-0 w-20 h-20 rounded-full ${
-                id === "anvin" ? "bg-red-500/10" : "bg-blue-500/10"
+                id === "anvin" 
+                  ? "bg-red-500/10" 
+                  : isDeveloper(id)
+                    ? "bg-blue-500/10"
+                    : "bg-emerald-500/10"
               } -z-10`}
             />
             <motion.div 
@@ -490,7 +350,11 @@ function TeamMemberProfile() {
               }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
               className={`absolute bottom-0 left-0 w-16 h-16 rounded-full ${
-                id === "anvin" ? "bg-red-500/10" : "bg-indigo-500/10"
+                id === "anvin" 
+                  ? "bg-red-500/10" 
+                  : isDeveloper(id)
+                    ? "bg-indigo-500/10"
+                    : "bg-teal-500/10"
               } -z-10`}
             />
           </motion.div>
@@ -502,18 +366,14 @@ function TeamMemberProfile() {
             transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
             className="text-center md:text-left"
           >
-            <h1 className={`text-4xl md:text-6xl font-bold mb-2 ${
-              id === "anvin" 
-                ? "bg-gradient-to-r from-red-500 via-white to-red-800 bg-clip-text text-transparent"
-                : "bg-gradient-to-r from-blue-400 via-white to-indigo-500 bg-clip-text text-transparent"
-            }`}>
+            <h1 className={`text-4xl md:text-6xl font-bold mb-2 bg-gradient-to-r ${profile.theme.gradientText} bg-clip-text text-transparent`}>
               {person.name}
             </h1>
             <motion.h2 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.8 }}
-              className={`text-xl md:text-2xl ${id === "anvin" ? "text-red-500" : "text-blue-400"} mb-4`}
+              className={`text-xl md:text-2xl text-${profile.theme.primary}-500 mb-4`}
             >
               {id === "anvin" ? "SYSTEMS ALLIANCE N7 - " + person.title : person.title}
             </motion.h2>
@@ -539,7 +399,7 @@ function TeamMemberProfile() {
                 href={person.portfolio.linkedin} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className={id === "anvin" ? "bg-[#E50000] p-3 rounded-full text-white" : "bg-[#0077B5] p-3 rounded-full text-white"}
+                className={`${profile.theme.buttonBg} p-3 rounded-full text-white`}
               >
                 <FaLinkedinIn size={20} />
               </motion.a>
@@ -559,7 +419,7 @@ function TeamMemberProfile() {
                 href={person.portfolio.twitter} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className={id === "anvin" ? "bg-[#E50000] p-3 rounded-full text-white" : "bg-[#1DA1F2] p-3 rounded-full text-white"}
+                className={`${profile.theme.buttonBg} p-3 rounded-full text-white`}
               >
                 <FaTwitter size={20} />
               </motion.a>
@@ -573,22 +433,19 @@ function TeamMemberProfile() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.4 }}
-            className={`${id === "anvin" ? "bg-black/50 border border-red-500/30" : "bg-white/5"} backdrop-blur-sm rounded-xl p-8`}
+            className={`${profile.theme.sectionBg} backdrop-blur-sm rounded-xl p-8`}
           >
-            <h2 className={`text-2xl font-bold mb-4 ${id === "anvin" ? "text-red-500" : "text-blue-300"}`}>Skills & Expertise</h2>
+            <h2 className={`text-2xl font-bold mb-4 text-${profile.theme.primary}-500`}>
+              {isDeveloper(id) ? "Skills & Expertise" : "Academic Expertise"}
+            </h2>
             <div className="flex flex-wrap gap-2">
-              {(id === "anvin" ? 
-                ["Combat", "Tactical Planning", "System Alliance Procedures", "Spectre Certification", "Crisis Management"] : 
-                ["Leadership", "Strategic Planning", "Team Management", "Innovation", "Product Development"]
-              ).map((skill, index) => (
+              {profile.skills.map((skill, index) => (
                 <motion.span 
                   key={index}
                   initial={{ opacity: 0, scale: 0 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.3, delay: 1.5 + (index * 0.1) }}
-                  className={`px-3 py-1 ${
-                    id === "anvin" ? "bg-red-500/20 border border-red-500/50" : "bg-blue-500/20"
-                  } rounded-full text-sm`}
+                  className={`px-3 py-1 ${profile.theme.skillBg} rounded-full text-sm`}
                 >
                   {skill}
                 </motion.span>
@@ -600,26 +457,23 @@ function TeamMemberProfile() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.6 }}
-            className={`${id === "anvin" ? "bg-black/50 border border-red-500/30" : "bg-white/5"} backdrop-blur-sm rounded-xl p-8`}
+            className={`${profile.theme.sectionBg} backdrop-blur-sm rounded-xl p-8`}
           >
-            <h2 className={`text-2xl font-bold mb-4 ${id === "anvin" ? "text-red-500" : "text-blue-300"}`}>Experience</h2>
+            <h2 className={`text-2xl font-bold mb-4 text-${profile.theme.primary}-500`}>
+              {isDeveloper(id) ? "Experience" : "Academic Journey"}
+            </h2>
             <ul className="space-y-4">
-              <motion.li 
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.4, delay: 1.8 }}
-              >
-                <p className="font-semibold">{id === "anvin" ? "Systems Alliance N7 Special Forces" : "Nexoris"}</p>
-                <p className="text-zinc-400 text-sm">2020 - Present</p>
-              </motion.li>
-              <motion.li 
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.4, delay: 2 }}
-              >
-                <p className="font-semibold">{id === "anvin" ? "Citadel Security (C-Sec)" : "Previous Company"}</p>
-                <p className="text-zinc-400 text-sm">2015 - 2020</p>
-              </motion.li>
+              {profile.experience.map((exp, index) => (
+                <motion.li 
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.4, delay: 1.8 + (index * 0.2) }}
+                >
+                  <p className="font-semibold">{exp.company}</p>
+                  <p className="text-zinc-400 text-sm">{exp.period}</p>
+                </motion.li>
+              ))}
             </ul>
           </motion.div>
         </div>
@@ -630,38 +484,29 @@ function TeamMemberProfile() {
           transition={{ duration: 0.6, delay: 2.2 }}
           className="mb-16"
         >
-          <h2 className={`text-2xl font-bold mb-6 ${id === "anvin" ? "text-red-500" : "text-blue-300"} text-center`}>
-            {id === "anvin" ? "Service Record" : "Achievements"}
+          <h2 className={`text-2xl font-bold mb-6 text-${profile.theme.primary}-500 text-center`}>
+            {id === "anvin" 
+              ? "Service Record" 
+              : isDeveloper(id)
+                ? "Achievements"
+                : "Academic Achievements"}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {(id === "anvin" ? [
-              { title: "Missions Completed", value: "127" },
-              { title: "Years of Service", value: "8+" },
-              { title: "Commendations", value: "15" }
-            ] : [
-              { title: "Projects Completed", value: "150+" },
-              { title: "Years of Experience", value: "10+" },
-              { title: "Awards & Recognition", value: "12" }
-            ]).map((item, index) => (
+            {profile.achievements.map((achievement, index) => (
               <motion.div 
                 key={index}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4, delay: 2.4 + (index * 0.2) }}
-                className={id === "anvin" 
-                  ? "bg-gradient-to-br from-red-500/20 to-red-900/30 border border-red-500/30 rounded-xl p-6 text-center"
-                  : "bg-gradient-to-br from-blue-500/20 to-indigo-500/20 rounded-xl p-6 text-center"
-                }
+                className={`${profile.theme.achievementBg} rounded-xl p-6 text-center`}
               >
-                <p className="text-4xl font-bold mb-2 text-white">{item.value}</p>
-                <p className="text-zinc-400">{item.title}</p>
+                <p className="text-4xl font-bold mb-2 text-white">{achievement.value}</p>
+                <p className="text-zinc-400">{achievement.title}</p>
               </motion.div>
             ))}
           </div>
         </motion.div>
       </div>
-      
-      <Footer />
     </div>
   );
 }

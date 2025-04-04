@@ -158,7 +158,7 @@ function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="#about" className="text-gray-400 hover:text-white transition-colors duration-200 inline-block">
+                <a href="/#about" className="text-gray-400 hover:text-white transition-colors duration-200 inline-block">
                   About Us
                 </a>
               </li>
@@ -168,7 +168,7 @@ function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="#services" className="text-gray-400 hover:text-white transition-colors duration-200 inline-block">
+                <a href="/#services" className="text-gray-400 hover:text-white transition-colors duration-200 inline-block">
                   Services
                 </a>
               </li>
@@ -183,22 +183,22 @@ function Footer() {
             </h3>
             <ul className="space-y-3">
               <li>
-                <a href="#projects" className="text-gray-400 hover:text-white transition-colors duration-200 inline-block">
+                <a href="/#projects" className="text-gray-400 hover:text-white transition-colors duration-200 inline-block">
                   Case Studies
                 </a>
               </li>
               <li>
-                <a href="#projects" className="text-gray-400 hover:text-white transition-colors duration-200 inline-block">
+                <a href="/#projects" className="text-gray-400 hover:text-white transition-colors duration-200 inline-block">
                   Recent Work
                 </a>
               </li>
               <li>
-                <a href="#projects" className="text-gray-400 hover:text-white transition-colors duration-200 inline-block">
+                <a href="/#projects" className="text-gray-400 hover:text-white transition-colors duration-200 inline-block">
                   Web Applications
                 </a>
               </li>
               <li>
-                <a href="#projects" className="text-gray-400 hover:text-white transition-colors duration-200 inline-block">
+                <a href="/#projects" className="text-gray-400 hover:text-white transition-colors duration-200 inline-block">
                   Mobile Apps
                 </a>
               </li>
@@ -213,22 +213,22 @@ function Footer() {
             </h3>
             <ul className="space-y-3">
               <li>
-                <a href="#blog" className="text-gray-400 hover:text-white transition-colors duration-200 inline-block">
+                <a href="/#blog" className="text-gray-400 hover:text-white transition-colors duration-200 inline-block">
                   Blog
                 </a>
               </li>
               <li>
-                <a href="#resources" className="text-gray-400 hover:text-white transition-colors duration-200 inline-block">
+                <a href="/#resources" className="text-gray-400 hover:text-white transition-colors duration-200 inline-block">
                   Documentation
                 </a>
               </li>
               <li>
-                <a href="#resources" className="text-gray-400 hover:text-white transition-colors duration-200 inline-block">
+                <a href="/#resources" className="text-gray-400 hover:text-white transition-colors duration-200 inline-block">
                   Tutorials
                 </a>
               </li>
               <li>
-                <a href="#faqs" className="text-gray-400 hover:text-white transition-colors duration-200 inline-block">
+                <a href="/#faqs" className="text-gray-400 hover:text-white transition-colors duration-200 inline-block">
                   FAQs
                 </a>
               </li>
@@ -272,9 +272,9 @@ function Footer() {
             &copy; {new Date().getFullYear()} Nexoris. All Rights Reserved.
           </p>
           <div className="flex gap-4 mt-4 md:mt-0">
-            <a href="#terms" className="text-sm text-gray-500 hover:text-white transition-colors duration-200">Terms of Service</a>
-            <a href="#privacy" className="text-sm text-gray-500 hover:text-white transition-colors duration-200">Privacy Policy</a>
-            <a href="#cookies" className="text-sm text-gray-500 hover:text-white transition-colors duration-200">Cookie Policy</a>
+            <a href="/#terms" className="text-sm text-gray-500 hover:text-white transition-colors duration-200">Terms of Service</a>
+            <a href="/#privacy" className="text-sm text-gray-500 hover:text-white transition-colors duration-200">Privacy Policy</a>
+            <a href="/#cookies" className="text-sm text-gray-500 hover:text-white transition-colors duration-200">Cookie Policy</a>
           </div>
         </div>
       </div>

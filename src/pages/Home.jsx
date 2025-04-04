@@ -4,7 +4,6 @@ import AboutSection from "../components/AboutSection";
 import ServiceSection from "../components/ServiceSection";
 import ContactForm from "../components/ContactForm";
 import ProjectSection from "../components/ProjectSection";
-import TestimonialSection from "../components/TestimonialSection";
 
 function Home() {
   return (
@@ -13,7 +12,6 @@ function Home() {
       <AboutSection />
       <ServiceSection />
       <ProjectSection />
-      {/* <TestimonialSection /> */}
       <ContactForm />
     </div>
   );
