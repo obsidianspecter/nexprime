@@ -1,6 +1,6 @@
 import anuradhaImage from '../../assets/anuradha.jpg';
 
-const anuradha = {
+export const anuradha = {
   id: 'anuradha',
   name: 'Dr. Anuradha',
   title: 'Chief Research Officer',
@@ -24,6 +24,4 @@ const anuradha = {
     'Published multiple research papers',
     'Expert in Fuzzy Logic systems'
   ]
-};
-
-export default anuradha; 
+}; 
