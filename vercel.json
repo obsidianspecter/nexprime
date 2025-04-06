@@ -9,6 +9,14 @@
       "destination": "/index.html"
     },
     {
+      "source": "/blog",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/blog/:id",
+      "destination": "/index.html"
+    },
+    {
       "source": "/services/:path*",
       "destination": "/index.html"
     },

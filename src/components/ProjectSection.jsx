@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ast1 from '../assets/ast1.webp';
-import { FaArrowRight, FaArrowLeft, FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
+import { FaArrowRight, FaArrowLeft, FaGithub, FaExternalLinkAlt, FaStar } from 'react-icons/fa';
 
 const ProductCard = ({ product, isActive, onClick }) => (
   <motion.div 
@@ -18,18 +18,44 @@ const ProductCard = ({ product, isActive, onClick }) => (
         className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent opacity-80"></div>
+      
+      {/* Glowing effect for active card */}
+      {isActive && (
+        <motion.div 
+          className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10"
+          animate={{ 
+            opacity: [0.5, 0.8, 0.5],
+            scale: [1, 1.05, 1]
+          }}
+          transition={{ 
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+      )}
     </div>
     
     <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 text-white">
-      <h3 className="text-2xl md:text-3xl font-bold mb-2">{product.title}</h3>
+      <motion.h3 
+        className="text-2xl md:text-3xl font-bold mb-2"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        {product.title}
+      </motion.h3>
       <div className="flex flex-wrap gap-2 mb-4">
         {product.technologies.map((tech, index) => (
-          <span 
+          <motion.span 
             key={index} 
             className="px-2 py-1 text-xs font-medium bg-blue-500/20 text-blue-300 rounded-full border border-blue-500/30"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3, delay: index * 0.05 }}
           >
             {tech}
-          </span>
+          </motion.span>
         ))}
       </div>
       
@@ -44,16 +70,21 @@ const ProductCard = ({ product, isActive, onClick }) => (
           </p>
           <div className="flex flex-wrap gap-4">
             {product.links.map((link, index) => (
-              <a 
+              <motion.a 
                 key={index}
                 href={link.url} 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-white transition-colors duration-300"
+                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 rounded-lg text-white transition-all duration-300 shadow-lg hover:shadow-blue-500/20"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
               >
                 {link.type === 'github' ? <FaGithub /> : <FaExternalLinkAlt />}
                 <span>{link.label}</span>
-              </a>
+              </motion.a>
             ))}
           </div>
         </motion.div>
@@ -65,6 +96,7 @@ const ProductCard = ({ product, isActive, onClick }) => (
 const ProjectSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [autoplay, setAutoplay] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
   const autoplayRef = useRef(null);
   
   const products = [
@@ -121,7 +153,7 @@ const ProjectSection = () => {
   ];
   
   useEffect(() => {
-    if (autoplay) {
+    if (autoplay && !isHovered) {
       autoplayRef.current = setInterval(() => {
         setActiveIndex((prev) => (prev + 1) % products.length);
       }, 5000);
@@ -132,7 +164,7 @@ const ProjectSection = () => {
         clearInterval(autoplayRef.current);
       }
     };
-  }, [autoplay, products.length]);
+  }, [autoplay, products.length, isHovered]);
   
   const handleProductClick = (index) => {
     if (index === activeIndex) return;
@@ -166,11 +198,17 @@ const ProjectSection = () => {
   };
 
   return (
-    <div id="projects" className="w-screen min-h-screen bg-[#00031D] text-white py-16 px-6">
+    <div id="projects" className="w-screen min-h-screen bg-[#00031D] text-white py-16 px-6 relative overflow-hidden">
+      {/* Background elements */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
+        <div className="absolute top-20 left-20 w-64 h-64 rounded-full bg-blue-500/5 blur-3xl"></div>
+        <div className="absolute bottom-20 right-20 w-64 h-64 rounded-full bg-purple-500/5 blur-3xl"></div>
+      </div>
+      
       <hr className="border-blue-300 w-full mb-12 opacity-40" />
       
       <motion.div 
-        className="max-w-7xl mx-auto"
+        className="max-w-7xl mx-auto relative z-10"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -185,7 +223,7 @@ const ProjectSection = () => {
               animate={{ rotate: -190 }}
               transition={{ duration: 4, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
             />
-            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-zinc-500 via-white to-blue-300 bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
               Our Products
             </h1>
             <motion.img 
@@ -201,9 +239,13 @@ const ProjectSection = () => {
           </p>
         </div>
         
-        <div className="relative">
+        <div 
+          className="relative"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
           <div className="grid grid-cols-12 gap-4 md:gap-6">
-            <AnimatePresence>
+            <AnimatePresence mode="wait">
               {products.map((product, index) => (
                 <motion.div
                   key={index}
@@ -228,7 +270,7 @@ const ProjectSection = () => {
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              className="p-3 rounded-full bg-blue-600/20 hover:bg-blue-600/40 text-white transition-colors duration-300"
+              className="p-3 rounded-full bg-gradient-to-r from-blue-600/20 to-purple-600/20 hover:from-blue-600/40 hover:to-purple-600/40 text-white transition-all duration-300 shadow-lg hover:shadow-blue-500/20"
               onClick={handlePrevious}
             >
               <FaArrowLeft />
@@ -236,15 +278,17 @@ const ProjectSection = () => {
             
             <div className="flex gap-2">
               {products.map((_, index) => (
-                <button
+                <motion.button
                   key={index}
                   className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    activeIndex === index ? "bg-blue-500 w-8" : "bg-white/30 hover:bg-white/50"
+                    activeIndex === index ? "bg-gradient-to-r from-blue-500 to-purple-500 w-8" : "bg-white/30 hover:bg-white/50"
                   }`}
                   onClick={() => {
                     setActiveIndex(index);
                     setAutoplay(false);
                   }}
+                  whileHover={{ scale: 1.2 }}
+                  whileTap={{ scale: 0.9 }}
                 />
               ))}
             </div>
@@ -252,12 +296,23 @@ const ProjectSection = () => {
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              className="p-3 rounded-full bg-blue-600/20 hover:bg-blue-600/40 text-white transition-colors duration-300"
+              className="p-3 rounded-full bg-gradient-to-r from-purple-600/20 to-blue-600/20 hover:from-purple-600/40 hover:to-blue-600/40 text-white transition-all duration-300 shadow-lg hover:shadow-purple-500/20"
               onClick={handleNext}
             >
               <FaArrowRight />
             </motion.button>
           </div>
+          
+          {/* Autoplay indicator */}
+          <motion.div 
+            className="absolute top-4 right-4 flex items-center gap-2 bg-black/30 backdrop-blur-sm px-3 py-1 rounded-full text-xs"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+          >
+            <FaStar className={`text-yellow-400 ${autoplay ? 'animate-pulse' : ''}`} />
+            <span>{autoplay ? 'Autoplay On' : 'Autoplay Off'}</span>
+          </motion.div>
         </div>
       </motion.div>
     </div>

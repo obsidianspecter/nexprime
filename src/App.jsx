@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import Home from './pages/Home';
 import MeetOurFamily from './pages/MeetOurFamily';
 import TeamMemberProfile from './pages/TeamMemberProfile';
+import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
 import GenerativeAI from './pages/services/GenerativeAI';
 import WebDevelopment from './pages/services/WebDevelopment';
 import MLDeepLearning from './pages/services/MLDeepLearning';
@@ -33,6 +35,8 @@ function App() {
         <Route index path="/" element={<Home />} />
         <Route path="/meet-our-family" element={<MeetOurFamily />} />
         <Route path="/team/:id" element={<TeamMemberProfile />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:id" element={<BlogPost />} />
         <Route path="/services/generative-ai" element={<GenerativeAI />} />
         <Route path="/services/web-development" element={<WebDevelopment />} />
         <Route path="/services/ml-deep-learning" element={<MLDeepLearning />} />

@@ -5,7 +5,7 @@ export const alagusundari = {
   name: 'Mrs. N. Alagusundari',
   title: 'Assistant Professor (Sr.Gr)',
   image: alagusundariImage,
-  description: 'Experienced academic with over 20 years in Computer Science and Engineering. Currently serving as Assistant Professor (Sr. Grade) at Sri Ramakrishna Engineering College.',
+  description: 'PhD in Computer Science with expertise in Artificial Neural Networks, Printed Electronics, and IoT Security.',
   portfolio: {
     linkedin: 'https://linkedin.com',
     github: 'https://github.com',
