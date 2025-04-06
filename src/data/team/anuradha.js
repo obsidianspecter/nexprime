@@ -1,4 +1,4 @@
-import anuradhaImage from '../../assets/team/anuradha.jpg';
+import anuradhaImage from '../../assets/anuradha.jpg';
 
 const anuradha = {
   id: 'anuradha',
