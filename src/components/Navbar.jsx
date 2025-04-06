@@ -24,11 +24,30 @@ const Navbar = () => {
         if (item === "Home") return "/";
         if (item === "Meet Our Family") return "/meet-our-family";
         if (item === "Blog") return "/blog";
-        return `/${item.toLowerCase().replace(/\s+/g, '-')}`;
+        return `#${item.toLowerCase().replace(/\s+/g, '-')}`;
     };
 
     const isRouterLink = (item) => {
-        return item === "Home" || item === "Meet Our Family" || item === "Blog";
+        return ["Home", "Meet Our Family", "Blog"].includes(item);
+    };
+
+    const handleNavClick = (e, item) => {
+        if (!isRouterLink(item)) {
+            e.preventDefault();
+            if (location.pathname !== "/") {
+                // If not on home page, navigate to home first
+                window.location.href = `/${getLink(item)}`;
+            } else {
+                // On home page, scroll to section
+                const element = document.querySelector(getLink(item));
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                    setIsOpen(false);
+                }
+            }
+        } else {
+            setIsOpen(false);
+        }
     };
 
     return (
@@ -71,6 +90,7 @@ const Navbar = () => {
                                     key={index}
                                     href={getLink(item)}
                                     className="text-gray-300 hover:text-white transition-colors duration-300"
+                                    onClick={(e) => handleNavClick(e, item)}
                                 >
                                     {item}
                                 </a>
@@ -119,7 +139,7 @@ const Navbar = () => {
                                         <a
                                             href={getLink(item)}
                                             className="block py-2 text-gray-300 hover:text-white transition-colors duration-300"
-                                            onClick={() => setIsOpen(false)}
+                                            onClick={(e) => handleNavClick(e, item)}
                                         >
                                             {item}
                                         </a>

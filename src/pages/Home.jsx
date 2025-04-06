@@ -8,11 +8,21 @@ import ProjectSection from "../components/ProjectSection";
 function Home() {
   return (
     <div className="w-full min-h-screen bg-[#00031D] overflow-x-hidden">
-      <HeroSection />
-      <AboutSection />
-      <ServiceSection />
-      <ProjectSection />
-      <ContactForm />
+      <div id="home">
+        <HeroSection />
+      </div>
+      <div id="about">
+        <AboutSection />
+      </div>
+      <div id="services">
+        <ServiceSection />
+      </div>
+      <div id="projects">
+        <ProjectSection />
+      </div>
+      <div id="contact">
+        <ContactForm />
+      </div>
     </div>
   );
 }
